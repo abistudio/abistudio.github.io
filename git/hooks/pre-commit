@@ -5,8 +5,8 @@ PATH="/usr/local/bin:$PATH"
 exec 1>&2
 
 IS_ERROR=0
-# コミットされるファイルで .php で終わるもの
-for FILE in `git diff-index --name-status HEAD -- | grep -E '^[AUM].*\.php$'| cut -c3-`; do
+# ステージング(Addされたもの)で .php で終わるもの
+for FILE in `git diff --cached --name-status HEAD -- | grep -E '^[AUM].*\.php$'| cut -c3-`; do
     # シンタックスのチェック
     if php -l $FILE; then
         # PSR準拠でコード書き換え
