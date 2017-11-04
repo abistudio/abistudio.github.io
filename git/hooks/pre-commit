@@ -13,6 +13,10 @@ for FILE in `git diff --cached --name-status HEAD -- | grep -E '^[AUM].*\.php$'|
         # php-cs-fixer のオプション指定は以下を参照
         # https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/master/UPGRADE.md#cli-options
         php-cs-fixer fix $FILE --rules='{"@PSR2":true, "phpdoc_align":true, "include": true, "blank_line_after_opening_tag":true, "blank_line_before_return":true, "binary_operator_spaces":{"align_double_arrow":true, "align_equals":false}, "concat_space":{"spacing":"none"}, "function_typehint_space":true, "lowercase_cast":true, "no_blank_lines_after_class_opening":true, "no_blank_lines_after_phpdoc":true, "no_trailing_comma_in_singleline_array": true, "no_whitespace_before_comma_in_array":true, "not_operator_with_successor_space":true, "object_operator_without_whitespace":true, "single_quote":true, "space_after_semicolon":true, "standardize_not_equals":true, "ternary_operator_spaces":true, "whitespace_after_comma_in_array":true, "array_syntax":{"syntax":"short"}}'
+
+        # 文字コードをUTF-8に変換
+        type nkf >/dev/null 2>&1 && nkf -w --overwrite $FILE
+
         git add $FILE
 
         # PHPMDで未使用変数のチェック
